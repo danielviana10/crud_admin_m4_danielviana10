@@ -5,6 +5,7 @@ import { AppError } from "../errors/errors";
 
 export const ensureTokenAdmin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const {decoded} = res.locals
+    console.log(decoded)
     if(decoded){
         const query: UserResult = await client.query(
             'SELECT * FROM "users" WHERE "id" = $1',[decoded.sub]

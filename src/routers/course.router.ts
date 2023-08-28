@@ -6,11 +6,10 @@ import middlewares from "../middlewares";
 
 const courseRouter: Router = Router();
 
-courseRouter.post("", validatedBody(createCourseSchema), courseController.create);
 
-courseRouter.post("/:courseId/users/:userId", middlewares.ensureTokenIsValid, middlewares.ensureTokenOwner, courseController.addUserToCourse)
-courseRouter.delete("/:courseId/users/:userId", middlewares.ensureTokenIsValid, courseController.setUserNullFromCourse)
-// courseRouter.get("", courseController.read);
-// courseRouter.get("/:id/courses", courseController.retrieve)
+courseRouter.post("", middlewares.ensureTokenAdmin, validatedBody(createCourseSchema), courseController.create);
+
+courseRouter.post("/:courseId/users/:userId", middlewares.ensureTokenIsValid,middlewares.validateIdExists('params', 'userId', 'users', "User/course not found"), courseController.addUserToCourse)
+courseRouter.delete("/:courseId/users/:userId", middlewares.ensureTokenIsValid, middlewares.validateIdExists('params', 'courseId', 'courses', "User/course not found"), courseController.setUserNullFromCourse)
 
 export default courseRouter;

@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS "userCourses", "courses", "users";
+
 CREATE TABLE IF NOT EXISTS "users"(
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(50) NOT NULL,
