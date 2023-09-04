@@ -7,9 +7,11 @@ const userRouter: Router = Router();
 
 userRouter.post("", middlewares.validatedBody(createUserSchema), middlewares.validateEmailExists, userController.create);
 
-userRouter.get("", middlewares.ensureTokenIsValid, middlewares.ensureTokenAdmin, userController.read)
+userRouter.use("", middlewares.ensureTokenIsValid, middlewares.ensureTokenAdmin)
 
-userRouter.get("/:id/courses", middlewares.ensureTokenIsValid, middlewares.ensureTokenAdmin, userController.listUserCourse)
+userRouter.get("", userController.read)
+
+userRouter.get("/:id/courses", middlewares.ensureTokenIsValid, middlewares.ensureTokenAdmin, middlewares.validateIdExists("params","id","users","User not found."), userController.listUserCourse)
 
 
 export default userRouter;

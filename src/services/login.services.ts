@@ -23,7 +23,7 @@ const login = async (payload: LoginRequest): Promise<string> => {
     };
 
     const token: string = sign(
-        { email: queryResult.rows[0].email },
+        { email: queryResult.rows[0].email, admin:queryResult.rows[0].admin },
         process.env.SECRET_KEY!,
         { 
             expiresIn: process.env.EXPIRES_IN,

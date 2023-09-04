@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { courseServices } from "../services";
 
 const create = async (req: Request, res: Response): Promise<Response> => {
-    const course = await courseServices.create(req.body)
+    const course = await courseServices.create(req.body);
     return res.status(201).json(course);
 };
 
@@ -11,7 +11,7 @@ const addUserToCourse = async (req: Request, res: Response): Promise<Response> =
 
     await courseServices.addUserToCourse(userId, courseId)
 
-    return res.status(201).json({ message: "User successfully vinculed to course." });
+    return res.status(201).json({ message: "User successfully vinculed to course" });
 };
 
 const setUserNullFromCourse = async (req: Request, res: Response): Promise<Response> => {
@@ -20,10 +20,15 @@ const setUserNullFromCourse = async (req: Request, res: Response): Promise<Respo
     return res.status(204).json();
 };
 
-// const read = async (req: Request, res: Response): Promise<Response> => {
-//     const course: CourseRead = await courseServices.read();
-//     return res.status(200).json(course);
-// };
+const read = async (req: Request, res: Response): Promise<Response> => {
+    const course = await courseServices.read();
+    return res.status(200).json(course);
+};
+
+const listCourseUser = async (req: Request, res: Response): Promise<Response> => {
+    const courseUsers = await courseServices.listCourseUser(req.params.courseId);
+    return res.status(200).json(courseUsers)
+}
 
 // const retrieve = async (req: Request, res: Response): Promise<Response> => {
 //     const course: Course = res.locals.foundUser
@@ -39,4 +44,4 @@ const setUserNullFromCourse = async (req: Request, res: Response): Promise<Respo
 
 
 
-export default { create, addUserToCourse, setUserNullFromCourse };
+export default { create, addUserToCourse, setUserNullFromCourse, read, listCourseUser };

@@ -2,7 +2,7 @@ import format from "pg-format";
 import { UserRequest, UserResult, UserReturn } from "../interfaces/user.interface";
 import { client } from "../database";
 import { hash } from "bcryptjs";
-import { userWhithoutPassowrd } from "../schema/user.schemas";
+import { userWhithoutPassword } from "../schema/user.schemas";
 import { AppError } from "../errors/errors";
 
 
@@ -15,7 +15,7 @@ const create = async (payload: UserRequest): Promise<UserReturn> => {
     )
     
     const query: UserResult = await client.query(queryFormat);
-    return userWhithoutPassowrd.parse(query.rows[0]);
+    return userWhithoutPassword.parse(query.rows[0]);
 }
 
 const listUserCourse = async (userId: string) => {
@@ -45,27 +45,19 @@ const listUserCourse = async (userId: string) => {
 }
 
 const read = async () => {
-    const query = await client.query(
-        'SELECT * FROM "users";'
-    );
-    return query.rows;
+    const query = `
+        SELECT 
+            u.id,
+            u.name,
+            u.email,
+            u.admin
+        FROM users u ;
+    `;
+
+    const array: UserResult = await client.query(query);
+
+    return array.rows
+
 };
-
-// const partialUpdate = async (
-//     userId: string,
-//     payload: UserUpdate
-// ): Promise<User> => {
-//     const queryFormat: string = format(
-//         'UPDATE "users" SET (%I) = ROW (%L) WHERE "id" = $1 RETURNING *;',
-//         Object.keys(payload),
-//         Object.values(payload)
-//     );
-//     const query: UserResult = await client.query(queryFormat, [userId]);
-//     return query.rows[0];
-// };
-
-// const destroy = async (userId: string): Promise<void> => {
-//     await client.query('DELETE FROM "users" WHERE "id" = $1', [userId]);
-// }
 
 export default { create, listUserCourse, read }

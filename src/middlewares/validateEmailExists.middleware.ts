@@ -12,7 +12,7 @@ export const validateEmailExists = async (req: Request, res: Response, next: Nex
     );
     if(query.rowCount !==0){
         throw new AppError("Email already registered", 409);
-    }
+    };
 
     return next();
 };

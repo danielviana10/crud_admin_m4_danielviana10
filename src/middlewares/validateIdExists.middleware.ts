@@ -20,10 +20,12 @@ export const validateIdExists = (
 
     const query: UserResult = await client.query(queryFormat, [id]
     );
+
     if(query.rowCount === 0){
         throw new AppError(errorMsg, 404);
-    }
+    };
 
     res.locals = { ...res.locals, foundData: query.rows[0]}
+
     return next();
 };

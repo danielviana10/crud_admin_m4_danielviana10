@@ -12,8 +12,8 @@ const createUserSchema = userSchema.omit({
     id: true,
 });
 
-const userWhithoutPassowrd = userSchema.omit({
+const userWhithoutPassword = userSchema.omit({
     password:true,
 });
 
-export { userSchema, createUserSchema, userWhithoutPassowrd };
+export { userSchema, createUserSchema, userWhithoutPassword };
